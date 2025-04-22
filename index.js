@@ -1991,7 +1991,8 @@ const personajes = [
 
 // Obtener todos los personajes
 app.get('/personajes', (req, res) => {
-  res.json(personajes);
+  const limit = parseInt(req.query.limit) || personajes.length; // Si no mandan limit, devuelve todos
+  res.json(personajes.slice(0, limit));
 });
 
 // Obtener un personaje por ID
