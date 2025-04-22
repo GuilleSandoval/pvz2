@@ -1991,9 +1991,17 @@ const personajes = [
 
 // Obtener todos los personajes
 app.get('/personajes', (req, res) => {
-  const limit = parseInt(req.query.limit) || personajes.length; // Si no mandan limit, devuelve todos
-  res.json(personajes.slice(0, limit));
+  const page = parseInt(req.query.page) || 1; // Página actual (por defecto 1)
+  const limit = parseInt(req.query.limit) || personajes.length; // Cuántos personajes mostrar
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const personajesPagina = personajes.slice(startIndex, endIndex);
+
+  res.json(personajesPagina);
 });
+
 
 // Obtener un personaje por ID
 app.get('/personajes/:id', (req, res) => {
